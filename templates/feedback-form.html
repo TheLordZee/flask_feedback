@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Feedback
+{% endblock %}
+
+{% block content %}
+<h1 class="display-1">Add Feedback</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label }}
+        {{ form.title(class_="form-control", maxlength=100) }}
+        {% for error in form.title.errors %}
+        <span class="form-text text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.content.label }}
+        {{ form.content(class_="form-control", cols="35", rows="10") }}
+        {% for error in form.title.errors %}
+        <span class="form-text text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <button class="btn btn-success mt-2">Submit Feedback</button>
+</form>
+{% endblock %}

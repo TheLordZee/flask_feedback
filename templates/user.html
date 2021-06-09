@@ -4,10 +4,24 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="display-1">{{user.username}}</h1>
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <h1 class="display-1">{{user.username}}</h1>
+    </div>
+    {% if user.id == session['user_id'] %}
+    <div class="col-6 mt-3">
+        <a class="btn btn-primary" href="/users/{{user.username}}/feedback/add">Add Feedback</a>
+        <form action="/users/{{user.username}}/delete" method="POST">
+            <button class="btn btn-danger">Delete User</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
 <ul>
     <li>
         First Name: {{user.first_name}}
+        
     </li>
     <li>
         Last Name: {{user.last_name}}
@@ -16,4 +30,23 @@
         Email: {{user.email}}
     </li>
 </ul>
+
+<div class="row">
+    {% for fb in user.feedback %}
+    <div class="card col-sm-6 col-md-4 col-lg-3">
+        <div class="card-body">
+            <h5 class="card-title">{{fb.title}}</h5>
+            <p class="card-text">{{fb.content}}</p>
+            {% if user.id == session['user_id'] %}
+            <div class="row">
+                <a href="/feedback/{{fb.id}}/update" class="btn col-1"><i class="fas fa-edit text-info"></i></a>
+                <form action="/feedback/{{fb.id}}/delete" method="POST" class="d-flex col-1">
+                    <button class="btn"><i class="fas fa-trash text-danger"></i></button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
